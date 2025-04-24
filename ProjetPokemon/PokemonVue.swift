@@ -33,7 +33,7 @@ struct PokemonVue: View {
             } else {
                 Text("Chargement...")
                     .onAppear {
-                        viewModel.fetchPokemon()
+                        viewModel.fetchPokemon(orName: "carapuce")
                     }
             }
         }

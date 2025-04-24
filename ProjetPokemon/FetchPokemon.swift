@@ -5,8 +5,18 @@ class PokemonViewModel: ObservableObject {
     @Published var pokemon: Pokemon?
     private var cancellable: AnyCancellable?
     
-    func fetchPokemon() {
-        guard let url = URL(string: "https://pokebuildapi.fr/api/v1/pokemon/1") else { return }
+    func fetchPokemon(byId id: Int? = nil, orName name: String? = nil) {
+        var urlString: String
+            
+        if let id = id {
+            urlString = "https://pokebuildapi.fr/api/v1/pokemon/\(id)"
+        } else if let name = name {
+            urlString = "https://pokebuildapi.fr/api/v1/pokemon/\(name)"
+        } else {
+            return
+        }
+
+        guard let url = URL(string: urlString) else { return }
         
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map { $0.data }
